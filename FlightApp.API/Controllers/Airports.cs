@@ -25,10 +25,10 @@ namespace FlightApp.API.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetById(int id)
+        [Route("{code}")]
+        public IActionResult GetByCode(string code)
         {
-            return Ok(_contextAccessor.Airports.findById(id));
+            return Ok(_contextAccessor.Airports.find( A => (A.Code.Equals(code)) ));
         }
     }
 }

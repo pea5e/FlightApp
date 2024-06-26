@@ -1,4 +1,5 @@
 ﻿using FlightApp.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -23,17 +24,41 @@ namespace FlightApp.Data.Repos
 
         public IEnumerable<Type> findAll(string[] matches = null)
         {
-            return _dbContext.Set<Type>().ToList();
+            IQueryable<Type> query = _dbContext.Set<Type>();
+            if (matches != null)
+            {
+                foreach (var mat in matches)
+                {
+                    query = query.Include(mat);
+                }
+            }
+            return query.ToList();
         }
 
         public IEnumerable<Type> findAllBy(Expression<Func<Type,bool>> match, string[] matches=null)
         {
-            return _dbContext.Set<Type>().Where(match).ToList();
+            IQueryable<Type> query = _dbContext.Set<Type>();
+            if (matches != null)
+            {
+                foreach (var mat in matches)
+                {
+                    query = query.Include(mat);
+                }
+            }
+            return query.Where(match).ToList();
         }
 
         public Type find(Expression<Func<Type, bool>> match, string[] matches = null)
         {
-            return _dbContext.Set<Type>().SingleOrDefault(match);
+            IQueryable<Type> query = _dbContext.Set<Type>();
+            if (matches != null)
+            {
+                foreach (var mat in matches)
+                {
+                    query = query.Include(mat);
+                }
+            }
+            return query.Where(match).SingleOrDefault(match);
         }
 
         public Type Add(Type type)

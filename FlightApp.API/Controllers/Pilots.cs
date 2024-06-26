@@ -17,17 +17,6 @@ namespace FlightApp.API.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetById(int id) { 
-            return Ok(_contextAccessor.Pilots.findById(id));
-        }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(_contextAccessor.Pilots.findAll());
-        }
 
         [HttpPost("register")]
         public IActionResult Register(Pilot p)
