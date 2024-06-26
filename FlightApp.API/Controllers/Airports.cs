@@ -24,10 +24,11 @@ namespace FlightApp.API.Controllers
             return Ok(_contextAccessor.Airports.findAll());
         }
 
-        [HttpGet("id")]
-        public IActionResult GetById()
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById(int id)
         {
-            return Ok(_contextAccessor.Airports.findById(2));
+            return Ok(_contextAccessor.Airports.findById(id));
         }
     }
 }
