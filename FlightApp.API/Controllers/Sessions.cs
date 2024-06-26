@@ -17,10 +17,17 @@ namespace FlightApp.API.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [HttpGet]
-        public IActionResult GetById()
+        [HttpPost]
+        public IActionResult GetById(String SessionId)
         {
-            return Ok(_contextAccessor.Flights.findById(1));
+            Session s = _contextAccessor.Sessions.find(s => (s.SessionId.Equals(SessionId)));
+            if(s != null)
+            {
+                return Ok(s.Pilot);
+            }
+            return Forbid(); 
         }
+
+
     }
 }

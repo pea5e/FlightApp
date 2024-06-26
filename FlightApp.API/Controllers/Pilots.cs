@@ -42,11 +42,10 @@ namespace FlightApp.API.Controllers
         public IActionResult Login(String Email,String Password)
         {
             Pilot pilot = _contextAccessor.Pilots.find(p => (  p.Email.Equals(Email.ToLower()) && p.Password.Equals(Password) ));
-            Console.WriteLine(pilot);
+            
             Session s = new Session();
             if (pilot != null)
             {
-                Console.WriteLine("found");
                 Random rnd = new Random();
                 string sid = "";
                 do
@@ -61,6 +60,7 @@ namespace FlightApp.API.Controllers
                 s.Pilot = pilot;
                 _contextAccessor.Sessions.Add(s);
                 _contextAccessor.Complete();
+                s.Pilot.Sessions.Clear();
             }
             return Ok(s);
         }
