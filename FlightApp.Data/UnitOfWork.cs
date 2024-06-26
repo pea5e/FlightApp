@@ -33,7 +33,6 @@ namespace FlightApp.Data
             Checkings = new BaseRepo<Checking>(_context);
             Sessions = new BaseRepo<Session>(_context);
             Airports = new BaseRepo<Airport>(_context);
-
         }
 
         public int Complete()

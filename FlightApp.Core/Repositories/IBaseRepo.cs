@@ -17,5 +17,7 @@ namespace FlightApp.Core.Repositories
 
         public Type find(Expression<Func<Type, bool>> match);
 
+        public Type Add(Type type);
+
     }
 }
