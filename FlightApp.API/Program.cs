@@ -1,3 +1,4 @@
+using FlightApp.Core;
 using FlightApp.Core.Repositories;
 using FlightApp.Data;
 using FlightApp.Data.Repos;
@@ -9,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<FlightDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),b => b.MigrationsAssembly(typeof(FlightDbContext).Assembly.FullName)));
-builder.Services.AddTransient(typeof(IBaseRepo<>),typeof(BaseRepo<>));
+//builder.Services.AddTransient(typeof(IBaseRepo<>),typeof(BaseRepo<>));
+builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

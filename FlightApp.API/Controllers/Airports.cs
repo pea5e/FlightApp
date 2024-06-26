@@ -1,4 +1,5 @@
-﻿using FlightApp.Core.Models;
+﻿using FlightApp.Core;
+using FlightApp.Core.Models;
 using FlightApp.Core.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace FlightApp.API.Controllers
     [ApiController]
     public class Airports : ControllerBase
     {
-        private readonly IBaseRepo<Airport> _contextAccessor;
+        private readonly IUnitOfWork _contextAccessor;
 
-        public Airports(IBaseRepo<Airport> contextAccessor)
+        public Airports(IUnitOfWork contextAccessor)
         {
             _contextAccessor = contextAccessor;
         }
@@ -20,13 +21,13 @@ namespace FlightApp.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_contextAccessor.getAll());
+            return Ok(_contextAccessor.Airports.findAll());
         }
 
         [HttpGet("id")]
         public IActionResult GetById()
         {
-            return Ok(_contextAccessor.getById(2));
+            return Ok(_contextAccessor.Airports.findById(2));
         }
     }
 }
