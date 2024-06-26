@@ -22,16 +22,21 @@ namespace FlightApp.API.Controllers
         public IActionResult Register(Pilot p)
         {
             p.Email = p.Email.ToLower();
-            IActionResult r =  Ok(_contextAccessor.Pilots.Add(p));
-            _contextAccessor.Complete();
-            return r;
+            Pilot r = new Pilot();
+            if (_contextAccessor.Pilots.find(s => (s.Email.Equals(p.Email)))==null ) {
+                 r = _contextAccessor.Pilots.Add(p);
+                _contextAccessor.Complete();
+            }
+            return Ok(r);
         }
 
         [HttpPost("login")]
-        public IActionResult Login(String Email,String Password)
+        public IActionResult Login(LoginDTO user)
         {
-            Pilot pilot = _contextAccessor.Pilots.find(p => (  p.Email.Equals(Email.ToLower()) && p.Password.Equals(Password) ));
-            
+            Pilot pilot = _contextAccessor.Pilots.find(p => (  p.Email.Equals(user.Email.ToLower()) && p.Password.Equals(user.Password) ));
+            Console.WriteLine(user.Email.ToLower());
+            Console.WriteLine("login");
+
             Session s = new Session();
             if (pilot != null)
             {
@@ -53,5 +58,11 @@ namespace FlightApp.API.Controllers
             }
             return Ok(s);
         }
+    }
+
+    public class LoginDTO
+    {
+        public String Email { get; set; }
+        public String Password { get; set; }
     }
 }

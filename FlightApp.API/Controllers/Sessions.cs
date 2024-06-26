@@ -18,17 +18,21 @@ namespace FlightApp.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPilotById(String SessionId)
+        public IActionResult GetPilotById(SessionDTO session)
         {
-            Session s = _contextAccessor.Sessions.find(s => (s.SessionId.Equals(SessionId)), new string[] {"Pilot"});
+            Session s = _contextAccessor.Sessions.find(s => (s.SessionId.Equals(session.SessionId)), new string[] {"Pilot"});
             if(s != null)
             {
                 s.Pilot.Sessions.Clear();
                 return Ok(s.Pilot);
             }
-            return Forbid(); 
+            return Ok(new Session()); 
         }
 
+    }
 
+    public class SessionDTO
+    {
+        public string SessionId { get; set; }
     }
 }

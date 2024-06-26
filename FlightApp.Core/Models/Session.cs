@@ -11,6 +11,7 @@ namespace FlightApp.Core.Models
         public int Id { get; set; }
         public string SessionId { get; set; }
         public Pilot Pilot { get; set; }
+        public Checking Checkings { get; set; }
         public ICollection<Flight> Flights { get; set; }
     }
 }
