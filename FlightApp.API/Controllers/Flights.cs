@@ -20,7 +20,14 @@ namespace FlightApp.API.Controllers
         [HttpPost]
         public IActionResult GetById(SessionDTO session)
         {
-            return Ok(_contextAccessor.Flights.find(f => (f.SessionPilot.SessionId.Equals(session.SessionId))));
+            List<Flight> flights = _contextAccessor.Flights.findAllBy(f => (f.SessionPilot.SessionId.Equals(session.SessionId)), new string[] { "SessionPilot", "From", "To" }).ToList();
+            for (int indexer=0;indexer<flights.Count;indexer++)
+            {
+                flights.ElementAt(indexer).SessionPilot.Pilot = null;
+                flights.ElementAt(indexer).SessionPilot.Flights = null;
+
+            }
+            return Ok(flights);
         }
     }
 }
