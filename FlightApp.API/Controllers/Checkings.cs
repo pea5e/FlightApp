@@ -40,8 +40,26 @@ namespace FlightApp.API.Controllers
                 List<Flight> flights = JsonConvert.DeserializeObject<List<Flight>>(result);
                 return Ok(flights);
             }
-            return Ok(new List<Flight>());
         }
-        
+
+        [HttpPost("Schedule")]
+        public async Task<IActionResult> GetSchedule(ReserveDTO data)
+        {
+            using (var client = new HttpClient())
+            {
+                string uri = "https://pea5e.pythonanywhere.com/flight/";
+                var result = await client.GetStringAsync(uri + data.code);
+
+                List<Flight> flights = JsonConvert.DeserializeObject<List<Flight>>(result);
+                return Ok();
+            }
+        }
+
+    }
+
+    public class ReserveDTO
+    {
+        public string sessionId { get; set; }
+        public string code { get; set; }
     }
 }
